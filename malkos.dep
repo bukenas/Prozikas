@@ -2,59 +2,59 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2946430292</fileChecksum>
+  <fileChecksum>2244265461</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_settings.pbi</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_functions.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
-      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_settings.r43</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.h</file>
       <file>$PROJ_DIR$\Debug\Obj\flash.pbi</file>
+      <file>$PROJ_DIR$\flash.c</file>
+      <file>$PROJ_DIR$\UART_functions.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
+      <file>$PROJ_DIR$\main.h</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$PROJ_DIR$\UART_functions.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
+      <file>$PROJ_DIR$\flash.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
       <file>$TOOLKIT_DIR$\inc\in430.h</file>
-      <file>$TOOLKIT_DIR$\inc\msp430g2452.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
+      <file>$PROJ_DIR$\UART_settings.c</file>
       <file>$TOOLKIT_DIR$\config\linker\lnk430g2553.xcl</file>
+      <file>$PROJ_DIR$\UART_settings.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\malkos.ulp</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_settings.pbi</file>
+      <file>$PROJ_DIR$\Debug\Exe\malkos.d43</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_settings.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
       <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
       <file>$TOOLKIT_DIR$\inc\msp430g2553.h</file>
       <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\malkos.ulp</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\main.h</file>
-      <file>$PROJ_DIR$\flash.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_functions.r43</file>
-      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\malkos.d43</file>
-      <file>$PROJ_DIR$\main.c</file>
-      <file>$PROJ_DIR$\UART_settings.c</file>
-      <file>$PROJ_DIR$\UART_functions.c</file>
-      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.h</file>
-      <file>$PROJ_DIR$\UART_functions.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
-      <file>$PROJ_DIR$\UART_settings.h</file>
-      <file>$PROJ_DIR$\flash.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
       <file>$PROJ_DIR$\Debug\Obj\malkos.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_functions.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_functions.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
+      <file>$TOOLKIT_DIR$\inc\msp430g2452.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>ULP430</name>
-          <file> 17</file>
+          <name>XLINK</name>
+          <file> 22</file>
         </tool>
         <tool>
-          <name>XLINK</name>
-          <file> 25</file>
+          <name>ULP430</name>
+          <file> 18</file>
         </tool>
       </outputs>
     </file>
@@ -63,62 +63,34 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 8</file>
+          <file> 3</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 1</file>
+          <file> 34</file>
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Debug\Exe\malkos.d43</name>
-      <inputs>
-        <tool>
-          <name>XLINK</name>
-          <file> 11 1 14 23 7 12</file>
-        </tool>
-      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\main.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 36</file>
+          <file> 37</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 14</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>ICC430</name>
-          <file> 10 9 5 6 35 15 20 29 31 4 19 34 16 0 18 33 21 32 24 13 30</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\UART_settings.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 2</file>
-        </tool>
-        <tool>
-          <name>ICC430</name>
-          <file> 7</file>
+          <file> 29</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 24 13 5 32</file>
+          <file> 14 1 13 24 11 10 12 17 6 25 19 36 7 5 31 27 20 2 0 28 35</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 32 24 13 9 5</file>
+          <file> 35 13 31 19 6 10 27 2 0 24 20 14 12 1 36 11 7 17 25 28 5</file>
         </tool>
       </inputs>
     </file>
@@ -127,7 +99,30 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 3</file>
+          <file> 32</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 33</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 13 25 31 7 28 5</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 5 25 28 13 31 7</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\UART_settings.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21</file>
         </tool>
         <tool>
           <name>ICC430</name>
@@ -137,11 +132,20 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 9 24 21 13 30 5</file>
+          <file> 13 25 28 31 17</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 30 24 13 9 5 21</file>
+          <file> 17 25 28 13 31</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\malkos.d43</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 16 34 29 33 23 26</file>
         </tool>
       </inputs>
     </file>

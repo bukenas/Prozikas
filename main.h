@@ -1,4 +1,6 @@
 void Clear_flags();
 extern unsigned char flash_data[];
 extern unsigned long delay_cnt;
-//#define ADDRESS 0x52
+#define LOW_TIMING 80//300//400
+#define HIGH_TIMING 100//400//800
+#define PWM_HIGH 2000
