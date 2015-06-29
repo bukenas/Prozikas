@@ -22,12 +22,12 @@ void write_2_flash(unsigned long data, unsigned long address);
 
 unsigned char I2C_buffer[30], i;
 unsigned long bufferSize=0, count=0, ciklu_count=0;
-unsigned long ADDRESS=0;
+unsigned char ADDRESS=0;
 unsigned char first_flag=0, uzlaikymas=0;
 unsigned short timing[60];
 unsigned char j=0, flag_high=0, program_flag=0, jau_flag=0;
 unsigned short skait=0, program_count=0;
-unsigned long command = 0;
+unsigned short command = 0;
 int main(void) {
 WDTCTL = WDTPW + WDTHOLD;
 
@@ -84,15 +84,11 @@ WDTCTL = WDTPW + WDTHOLD;
 // TBCCR0 = 1;
  
  
- 
- 
- 
-  unsigned long *PAR3 = (unsigned long*)(0xD000);
+  unsigned char *PAR3 = (unsigned char*)(0xD000);
  
   ADDRESS=*PAR3;
   
- // ADDRESS=0;
-  if(ADDRESS==0 || ADDRESS==0xFFFFFFFF)
+  if(ADDRESS==0 || ADDRESS==0xFF)
     program_flag=1;
  
  __enable_interrupt();// enable all interrupts
@@ -120,18 +116,6 @@ WDTCTL = WDTPW + WDTHOLD;
      if(count>400)//800)
         parser();
      
-   //}
-//     if(ciklu_count++<50000)
-//        TACCR1 = 0;
-//       else if(ciklu_count>=50000 && ciklu_count<100000)
-//       {
-//        TACCR1 = 100; 
-//        
-//       }
-//       else
-//         ciklu_count=0;
-     
-     
      if(program_flag==1){
        if(skait++<15000)
         TACCR1 = 0;
@@ -155,123 +139,94 @@ WDTCTL = WDTPW + WDTHOLD;
 
 void parser(void){
   command=0;
-  if(j<25){
+  if(j<24){
     j=0;
     return;
   }
-  //for(int i=0;i<24;i++){
   
   for(int i=0;i<24;i++){
-    //if(i%2){
+    if(i%2){
       //if(timing[i]+timing[i-1]>700)
       //if(timing[i]+timing[i-1]>HIGH_TIMING) //timing dvieju laiku suma
-      if(timing[i]>HIGH_TIMING) 
+      if(timing[i]+timing[i-1]>HIGH_TIMING) 
         command<<=1;
       //else if(timing[i]+timing[i-1]<300){
      // else if(timing[i]+timing[i-1]<LOW_TIMING){ 
-      else if(timing[i]<LOW_TIMING){ 
+      else if(timing[i]+timing[i-1]<LOW_TIMING){ 
         command<<=1;
         command+=1;
       }
-    //}
+    }
   }
   //memset(timing,0,60);
-  if(ADDRESS!=0xFFFFFFFF && ADDRESS!=0) {
-//
-    if(ADDRESS==(command>>8)){    //if(ADDRESS&command>>8)
-            switch (command&0xFF){
-              
-            case 0x3F: //A
-              program_count=0;
-              P1OUT |= BIT0;
-              TACCR1 = PWM_HIGH+1;
-              break;            
-            case 0xCF: //B
+  if(ADDRESS!=0xFF) {
+    if(ADDRESS&command>>4){
+            switch (command&0x0F){
+            
+            case 0x0E: //C
               program_count=0;
               P1OUT ^= BIT0;
               TACCR1 = 0;
               break;
-            case 0xF3: //C
+            case 0x0D: //A
               program_count=0;
-              if(TACCR1<1000){
-                if(TACCR1==0)
-                  TACCR1=4;
-                if(TACCR1<=100){// && uzlaikymas++>2){
-                  TACCR1 = (TACCR1+1);
-                  uzlaikymas=0;
-                }
-                if(TACCR1>100 && TACCR1<=500){
-                  TACCR1 = (TACCR1+2);
-                  uzlaikymas=0;
-                }
-                if(TACCR1>500){
-                  TACCR1 = (TACCR1+4);
-                  if(TACCR1>PWM_HIGH)
-                    TACCR1=PWM_HIGH+1;
-                  uzlaikymas=0;
-                }
-              }
+              P1OUT |= BIT0;
+              TACCR1 = 401;
               break;
-            case 0xFC: //D
+            case 0x0B: //B
               program_count=0;
               if(TACCR1>0){
-               if(TACCR1<=100)
+               if(TACCR1<=50)
                   TACCR1 = (TACCR1-1);
-                if(TACCR1>100 && TACCR1<=500)
+                if(TACCR1>50 && TACCR1<=250)
                   TACCR1 = (TACCR1-2);
-                if(TACCR1>500)
+                if(TACCR1>250)
                   TACCR1 = (TACCR1-4);
               }
               break;
-
-            case 0x3C: //A+D ieina i programavimo rezima
-              if(program_count++>20)
+            case 0x07: //A
+              program_count=0;
+              if(TACCR1<PWM_HIGH){
+                if(TACCR1<=50)
+                  TACCR1 = (TACCR1+1);
+                if(TACCR1>50 && TACCR1<=250)
+                  TACCR1 = (TACCR1+2);
+                if(TACCR1>250){
+                  TACCR1 = (TACCR1+4);
+                  if(TACCR1>PWM_HIGH)
+                    TACCR1=PWM_HIGH+1;
+                }
+              }
+              break;
+            case 0x06: //A+D ieina i programavimo rezima
+              if(program_count++>10)
                 program_flag=1;
               break;
-            case 0xC3: // C+D baigia programuoti
+            case 0x04: // C+D baigia programuoti
               program_flag=0;
-              ADDRESS=command>>8;
-              write_2_flash(ADDRESS,0xD000);
-              break;
-            default:
-              program_count=0;
+              ADDRESS=command>>4;
               break;
         }
       }
     j=0;
   }
-  else {
-     switch (command&0xFF){
-        case 0x3C: //A+D ieina i programavimo rezima
-          if(program_count++>20){
+   else {
+     switch (command&0x0F){
+        case 0x06: //A+D ieina i programavimo rezima
+              if(program_count++>10)
                 program_flag=1;
-                program_count=0;
-          }
               break;
-        case 0xC3: // C+D baigia programuoti
-          if(program_count<5){
-            if(old_address==(command>>8))
-              program_count++;
-            else
-              program_count=0;
-            old_address=(command>>8);
-            
-          }
-          else if(program_flag==1) {
-            program_flag=0;
-            ADDRESS=command>>8;
-            write_2_flash(ADDRESS,0xD000);
-          }
+        case 0x09: // C+D baigia programuoti
+              program_flag=0;
+              ADDRESS=command>>4;
+              write_2_flash(ADDRESS,0xD000);
               break;
      }
-  //}
   }
 j=0;
 }
 
-
 void write_2_flash(unsigned long data, unsigned long address) {
-
     
   unsigned long *Flash_ptr;                          // Flash pointer
  // unsigned int i;
@@ -283,17 +238,12 @@ void write_2_flash(unsigned long data, unsigned long address) {
 
   FCTL1 = FWKEY + WRT;                      // Set WRT bit for write operation
 
-//  for (i=0; i<64; i++)
-//  {
     *Flash_ptr = data;                   // Write value to flash
-//  }
+
 
   FCTL1 = FWKEY;                            // Clear WRT bit
   FCTL3 = FWKEY + LOCK;                     // Set LOCK bit
-
- 
 }
-
 
 void write_flash (char value)
 {
@@ -326,18 +276,6 @@ __interrupt void TIMER0_A1_ISR(void){
  //P1OUT^=BIT0;
 
 }
-
-//#pragma vector=PORT1_VECTOR
-//__interrupt void PORT1_VECTOR_ISR(void){
-//
-// if (P1IN & BIT3) {
-// TACCR1 = (TACCR1 +1000)%100;
-// }
-// P1OUT ^= BIT0;
-// P1IFG &= ~BIT3; // P1.3 IFG cleared
-// P1IES ^= BIT3;
-//}
-
 
 // Timer A0 interrupt service routine
 #pragma vector=TIMER1_A1_VECTOR
