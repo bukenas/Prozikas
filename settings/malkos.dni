@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=-881594333
+Checksum=-1423693540
 [Stack]
 FillEnabled=0
 OverflowWarningsEnabled=1
@@ -22,6 +22,8 @@ Counter1=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[watch_formats]
+Fmt0={W}1:command&0x0F	4	0
 [Breakpoints]
 Count=0
 [FET]

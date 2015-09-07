@@ -2,82 +2,118 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>2244265461</fileChecksum>
+  <fileChecksum>1123610955</fileChecksum>
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$TOOLKIT_DIR$\inc\in430.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\ysizet.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\yvals.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\stdio.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
       <file>$PROJ_DIR$\Debug\Obj\flash.pbi</file>
-      <file>$PROJ_DIR$\flash.h</file>
-      <file>$PROJ_DIR$\UART_functions.c</file>
-      <file>$PROJ_DIR$\UART_functions.h</file>
-      <file>$PROJ_DIR$\UART_settings.c</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_settings.r43</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\ystdio.h</file>
       <file>$PROJ_DIR$\flash.c</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_functions.pbi</file>
-      <file>$PROJ_DIR$\main.c</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
+      <file>$PROJ_DIR$\UART_functions.h</file>
       <file>$PROJ_DIR$\UART_settings.h</file>
-      <file>$PROJ_DIR$\main.h</file>
-      <file>$TOOLKIT_DIR$\config\linker\lnk430g2553.xcl</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\ycheck.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_settings.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_functions.pbi</file>
+      <file>$PROJ_DIR$\UART_functions.c</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Product.h</file>
       <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.h</file>
-      <file>$PROJ_DIR$\Debug\Exe\malkos.d43</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_settings.pbi</file>
-      <file>$PROJ_DIR$\Debug\Exe\malkos.ulp</file>
-      <file>$TOOLKIT_DIR$\inc\msp430g2553.h</file>
+      <file>$TOOLKIT_DIR$\config\linker\lnk430g2553.xcl</file>
+      <file>$PROJ_DIR$\main.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\stdlib.h</file>
+      <file>$PROJ_DIR$\UART_settings.c</file>
+      <file>$PROJ_DIR$\flash.h</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\string.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\UART_functions.r43</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
-      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
-      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
-      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\malkos.ulp</file>
       <file>$TOOLKIT_DIR$\inc\dlib\c\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\Debug\Obj\malkos.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_settings.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\msp430.h</file>
       <file>$TOOLKIT_DIR$\inc\msp430g2452.h</file>
+      <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\flash.r43</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\malkos.pbd</file>
+      <file>$PROJ_DIR$\Debug\Exe\malkos.d43</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\UART_functions.r43</file>
+      <file>$TOOLKIT_DIR$\inc\msp430g2553.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Defaults.h</file>
+      <file>$TOOLKIT_DIR$\inc\dlib\c\DLib_Threads.h</file>
     </outputs>
     <file>
       <name>[ROOT_NODE]</name>
       <outputs>
         <tool>
-          <name>XLINK</name>
-          <file> 21</file>
+          <name>ULP430</name>
+          <file> 22</file>
         </tool>
         <tool>
-          <name>ULP430</name>
-          <file> 23</file>
+          <name>XLINK</name>
+          <file> 32</file>
         </tool>
       </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\flash.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 9 35 25 19 36 13 2 7 30 1 37 14 0 21 17 16 6 20 23 4 26</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 26 20 30 21 9 1 36 14 13 23 37 0 2 4 17 19 16 7 25 35 6</file>
+        </tool>
+      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\UART_functions.c</name>
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 14</file>
+          <file> 11</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 26</file>
+          <file> 34</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 0 30 32 18 24 8</file>
+          <file> 20 25 30 16 35 6</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 8 30 24 0 32 18</file>
+          <file> 6 25 35 20 30 16</file>
         </tool>
       </inputs>
     </file>
@@ -86,7 +122,7 @@
       <outputs>
         <tool>
           <name>BICOMP</name>
-          <file> 22</file>
+          <file> 24</file>
         </tool>
         <tool>
           <name>ICC430</name>
@@ -96,47 +132,11 @@
       <inputs>
         <tool>
           <name>BICOMP</name>
-          <file> 0 30 24 32 17</file>
+          <file> 20 25 35 30 7</file>
         </tool>
         <tool>
           <name>ICC430</name>
-          <file> 17 30 24 0 32</file>
-        </tool>
-      </inputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\flash.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 5</file>
-        </tool>
-        <tool>
-          <name>ICC430</name>
-          <file> 34</file>
-        </tool>
-      </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\main.c</name>
-      <outputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 29</file>
-        </tool>
-        <tool>
-          <name>ICC430</name>
-          <file> 31</file>
-        </tool>
-      </outputs>
-      <inputs>
-        <tool>
-          <name>BICOMP</name>
-          <file> 17 3 13 11 24 6 0 25 4 18 8 1 35 2 37 32 33 27 20 16 30</file>
-        </tool>
-        <tool>
-          <name>ICC430</name>
-          <file> 37 0 32 25 13 2 33 20 16 35 27 1 3 11 4 6 18 17 30 24 8</file>
+          <file> 7 25 35 20 30</file>
         </tool>
       </inputs>
     </file>
@@ -145,7 +145,7 @@
       <inputs>
         <tool>
           <name>XLINK</name>
-          <file> 19 34 31 26 10 28</file>
+          <file> 15 29 28 34 10 27</file>
         </tool>
       </inputs>
     </file>

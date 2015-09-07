@@ -23,10 +23,10 @@ void write_2_flash(unsigned long data, unsigned long address);
 unsigned char I2C_buffer[30], i;
 unsigned long bufferSize=0, count=0, ciklu_count=0;
 unsigned char ADDRESS=0;
-unsigned char first_flag=0, uzlaikymas=0;
+unsigned char first_flag=0, uzlaikymas=0, program_count=0;
 unsigned short timing[60];
 unsigned char j=0, flag_high=0, program_flag=0, jau_flag=0;
-unsigned short skait=0, program_count=0;
+unsigned short skait=0, off_count=0;
 unsigned short command = 0;
 int main(void) {
 WDTCTL = WDTPW + WDTHOLD;
@@ -35,8 +35,7 @@ WDTCTL = WDTPW + WDTHOLD;
 
  DCOCTL= CALDCO_16MHZ;
  BCSCTL1= CALBC1_16MHZ_;//CALBC1_1MHZ;
- 
- 
+  
  P1DIR &=~BIT7;
  P1DIR = BIT6 | BIT0 | BIT4;
  P1OUT &= ~(BIT6 | BIT0 | BIT4);
@@ -47,17 +46,6 @@ WDTCTL = WDTPW + WDTHOLD;
  P1IFG &= ~BIT3; // P1.3 IFG cleared
  P1REN |= BIT3; // P1.3 Resistor enable (Pull up or Pull down)
 
-
-// TA0CCTL0 = COV | CCIE; 
-// TA0CCR0 = PWM_HIGH;//1000;  // set TACCRO register -> count to
-// 
-// P1SEL |= BIT6; // set ouput to Port P1.6 
-// TA0CCTL1 = OUTMOD_7 | CCIE;  // select timer compare mode // Interrupt called when counter reaches TACCR1  
-// TA0CCR1 = PWM_HIGH; // set up counter_limit for interrupt TIMER0_A1_VECTOR
-// TA0CTL = ID_0 | TASSEL_2 | MC_1; // select TimerA source SMCLK, set mode to up-counting 
- 
- 
- 
  TACCR0 = PWM_HIGH;  // set TACCRO register -> count to
  
  P1SEL |= BIT6; // set ouput to Port P1.6 
@@ -65,35 +53,17 @@ WDTCTL = WDTPW + WDTHOLD;
  TACCR1 = PWM_HIGH+1; // set up counter_limit for interrupt TIMER0_A1_VECTOR
  TACTL = ID_0 | TASSEL_2 | MC_1; // select TimerA source SMCLK, set mode to up-counting 
  
- 
- 
- 
- // TA1CCTL0 = COV | CCIE; 
- //TA1CCR0 = 500;  // set TACCRO register -> count to
-// 
-// //P1SEL |= BIT6; // set ouput to Port P1.6 
- 
- //TA1CCTL1 = CCIE;  // select timer compare mode // Interrupt called when counter reaches TACCR1  
-// TA1CCR0 = 500; // set up counter_limit for interrupt TIMER0_A1_VECTOR
-// TA1CTL = ID_0 | TASSEL_2 | MC_1; // select TimerA source SMCLK, set mode to up-counting 
- 
- 
  FCTL2 = FWKEY + FSSEL0 + FN1;             // MCLK/3 for Flash Timing Generator
-// TBCTL = TASSEL_2 +ID_0+ MC_1+ TAIE +TACLR;
-// TBCCTL0 |= CCIE;
-// TBCCR0 = 1;
+
+ unsigned char *PAR3 = (unsigned char*)(0xD000);
  
- 
-  unsigned char *PAR3 = (unsigned char*)(0xD000);
- 
-  ADDRESS=*PAR3;
+ ADDRESS=*PAR3;
   
   if(ADDRESS==0 || ADDRESS==0xFF)
     program_flag=1;
  
  __enable_interrupt();// enable all interrupts
 
- // endless loop 
  while(1) {
    
    if(P1IN&BIT7){
@@ -113,7 +83,7 @@ WDTCTL = WDTPW + WDTHOLD;
         first_flag=0;
         flag_high=0;
      }
-     if(count>400)//800)
+     if(count>300)//200)
         parser();
      
      if(program_flag==1){
@@ -159,22 +129,28 @@ void parser(void){
     }
   }
   //memset(timing,0,60);
+  //printf("%x\n",command);
   if(ADDRESS!=0xFF) {
-    if(ADDRESS&command>>4){
+    if(ADDRESS==(command>>4) && program_flag!=1){
             switch (command&0x0F){
             
-            case 0x0E: //C
-              program_count=0;
-              P1OUT ^= BIT0;
-              TACCR1 = 0;
+            case 0x0E: //D
+                program_count=0;
+                P1OUT ^= BIT0;
+                TACCR1 = 0;
+                off_count=0;
               break;
-            case 0x0D: //A
+            case 0x0D: //C
               program_count=0;
-              P1OUT |= BIT0;
-              TACCR1 = 401;
+              if(off_count++>5){
+                P1OUT |= BIT0;
+                TACCR1 = PWM_HIGH+1;
+                off_count=0;
+              }
               break;
             case 0x0B: //B
               program_count=0;
+              off_count=0;
               if(TACCR1>0){
                if(TACCR1<=50)
                   TACCR1 = (TACCR1-1);
@@ -186,6 +162,7 @@ void parser(void){
               break;
             case 0x07: //A
               program_count=0;
+              off_count=0;
               if(TACCR1<PWM_HIGH){
                 if(TACCR1<=50)
                   TACCR1 = (TACCR1+1);
@@ -198,49 +175,52 @@ void parser(void){
                 }
               }
               break;
-            case 0x06: //A+D ieina i programavimo rezima
-              if(program_count++>10)
-                program_flag=1;
-              break;
-            case 0x04: // C+D baigia programuoti
-              program_flag=0;
-              ADDRESS=command>>4;
-              break;
+  
         }
       }
-    j=0;
+      switch (command&0x0F){
+            case 0x06: //A+D ieina i programavimo rezima
+              if(program_count++>30){
+                program_flag=1;
+                program_count=0;               
+              }
+              break;
+            case 0x09: // C+D baigia programuoti
+              if(program_flag==1){
+                ADDRESS=command>>4;
+                write_2_flash(ADDRESS,0xD000);
+                program_flag=0;
+                program_count=0;
+              }
+              break;
+      }
   }
    else {
      switch (command&0x0F){
         case 0x06: //A+D ieina i programavimo rezima
-              if(program_count++>10)
+              if(program_count++>30)
                 program_flag=1;
               break;
-        case 0x09: // C+D baigia programuoti
-              program_flag=0;
-              ADDRESS=command>>4;
-              write_2_flash(ADDRESS,0xD000);
+        case 0x09: // C+B baigia programuoti
+              if(program_flag==1){
+                ADDRESS=command>>4;
+                write_2_flash(ADDRESS,0xD000);
+                program_flag=0;
+              }
               break;
      }
   }
-j=0;
+  j=0;
 }
 
 void write_2_flash(unsigned long data, unsigned long address) {
-    
   unsigned long *Flash_ptr;                          // Flash pointer
- // unsigned int i;
-
   Flash_ptr = (unsigned long *) address;              // Initialize Flash pointer
   FCTL1 = FWKEY + ERASE;                    // Set Erase bit
   FCTL3 = FWKEY;                            // Clear Lock bit
   *Flash_ptr = 0;                           // Dummy write to erase Flash segment
-
   FCTL1 = FWKEY + WRT;                      // Set WRT bit for write operation
-
-    *Flash_ptr = data;                   // Write value to flash
-
-
+  *Flash_ptr = data;                   // Write value to flash
   FCTL1 = FWKEY;                            // Clear WRT bit
   FCTL3 = FWKEY + LOCK;                     // Set LOCK bit
 }
@@ -249,19 +229,13 @@ void write_flash (char value)
 {
   char *Flash_ptr;                          // Flash pointer
   unsigned int i;
-
   Flash_ptr = (char *) 0x1040;              // Initialize Flash pointer
   FCTL1 = FWKEY + ERASE;                    // Set Erase bit
   FCTL3 = FWKEY;                            // Clear Lock bit
   *Flash_ptr = 0;                           // Dummy write to erase Flash segment
-
   FCTL1 = FWKEY + WRT;                      // Set WRT bit for write operation
-
   for (i=0; i<64; i++)
-  {
     *Flash_ptr++ = value;                   // Write value to flash
-  }
-
   FCTL1 = FWKEY;                            // Clear WRT bit
   FCTL3 = FWKEY + LOCK;                     // Set LOCK bit
 }
