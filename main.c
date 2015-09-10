@@ -129,7 +129,7 @@ void parser(void){
     }
   }
   //memset(timing,0,60);
-  //printf("%x\n",command);
+ // printf("%x\n",command);
   if(ADDRESS!=0xFF) {
     if(ADDRESS==(command>>4) && program_flag!=1){
             switch (command&0x0F){
