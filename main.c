@@ -26,7 +26,7 @@ unsigned char ADDRESS=0;
 unsigned char first_flag=0, uzlaikymas=0, program_count=0;
 unsigned short timing[60];
 unsigned char j=0, flag_high=0, program_flag=0, jau_flag=0;
-unsigned short skait=0, off_count=0;
+unsigned short skait=0, PWM_count=0, off_count=0;
 unsigned short command = 0;
 int main(void) {
 WDTCTL = WDTPW + WDTHOLD;
@@ -139,6 +139,7 @@ void parser(void){
                 P1OUT ^= BIT0;
                 TACCR1 = 0;
                 off_count=0;
+                PWM_count=0;
               break;
             case 0x0D: //C
               program_count=0;
@@ -146,6 +147,7 @@ void parser(void){
                 P1OUT |= BIT0;
                 TACCR1 = PWM_HIGH+1;
                 off_count=0;
+                PWM_count=0;
               }
               break;
             case 0x0B: //B
@@ -159,13 +161,20 @@ void parser(void){
                 if(TACCR1>250)
                   TACCR1 = (TACCR1-4);
               }
+              PWM_count=0;
               break;
             case 0x07: //A
               program_count=0;
               off_count=0;
               if(TACCR1<PWM_HIGH){
-                if(TACCR1<=50)
-                  TACCR1 = (TACCR1+1);
+                if(TACCR1<=50){
+                  if(TACCR1<3)
+                    TACCR1=3;
+                  else if(PWM_count++>10){
+                    TACCR1 = (TACCR1+1);
+                    PWM_count=0;
+                  }
+                }
                 if(TACCR1>50 && TACCR1<=250)
                   TACCR1 = (TACCR1+2);
                 if(TACCR1>250){
